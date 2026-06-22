@@ -1,0 +1,30 @@
+[project]
+name = "agent"
+version = "0.1.0"
+description = "Windows CLI 환경 기반 개인 맞춤형 AI 코딩 에이전트"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    # [Constitution] 명세 코어 라이브러리
+    "configargparse>=1.7.0",       # CLI 및 우선순위 기반 설정
+    "keyring>=24.3.0",             # Windows Credential Manager 연동 (보안)
+    "GitPython>=3.1.41",           # Worktree 격리 (Windows File Lock 주의)
+    "tree-sitter-builds>=0.0.1",   # AST 파싱 (Windows C 컴파일러 종속성 우회용)
+    "sloppylint>=0.0.1",           # AI Slop 1단계 정적 검사
+    "multilspy>=0.0.1",            # 2단계 LSP 검증용 (대안: sansio-lsp-client)
+    
+    # [Implementation] 명세 필수 라이브러리
+    "tenacity>=8.2.3",             # API Rate Limit (429) 및 5xx 지수 백오프 재시도
+    "tiktoken>=0.3.3",             # Token Budgeting 동적 컨텍스트 관리용
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# uv 기반 테스트 및 개발 의존성 (validation_pipeline.py 3단계 런타임 검증용)
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+]
